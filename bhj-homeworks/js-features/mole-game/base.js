@@ -4,10 +4,8 @@
 
   const stop = () => playing = true,
     getHole = index => document.getElementById(`hole${index}`),
-    deactivateHole = index =>
-      getHole( index ).className = 'hole',
-    activateHole = index =>
-      getHole( index ).className = 'hole hole_has-mole',
+    deactivateHole = index => getHole( index ).className = 'hole',
+    activateHole = index => getHole( index ).className = 'hole hole_has-mole',
     next = () => setTimeout(() => {
       if ( !playing ) {
         return;
