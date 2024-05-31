@@ -1,18 +1,18 @@
 let toolTips = document.querySelectorAll('.has-tooltip')
 
-toolTips.forEach((tool, index) => {
-  let tip = document.createElement('div')
-  tip.classList.add('tooltip');
-  tip.innerHTML = tool.title;
-  tip.style.left = tool.offsetLeft + 'px';
-  tool.appendChild(tip);
+let tip = document.createElement('div')
+tip.classList.add('tooltip');
+tip.innerHTML = ''
+toolTips.forEach((tool) => {
   tool.onclick = (e) => {
-    let tips = document.querySelectorAll('.tooltip')
-    tips.forEach((t, i) => {
-      if (t.parentElement !== tool)
-        t.className = 'tooltip'
-    })
+    if (tip.innerHTML == tool.title) {
+      tip.classList.toggle('tooltip_active')
+    } else {
+      tip.innerHTML = tool.title;
+      tip.style.left = tool.offsetLeft + 'px';
+      tool.insertAdjacentElement('afterEnd', tip)
+      tip.classList.add('tooltip_active')
+    }
     e.preventDefault()
-    tip.classList.toggle('tooltip_active')
   }
 })

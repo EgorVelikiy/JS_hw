@@ -19,43 +19,25 @@ decr.forEach((dec, index) => {
   dec.onclick = () => {
     let counter = Number(quantity[index].textContent);
     quantity[index].textContent = counter - 1;
-    if (counter == 0) {
-      quantity[index].textContent = 0;
+    if (counter == 1) {
+      quantity[index].textContent = 1;
     }
   }
 })
 
 append.forEach((add, index) => {
   add.onclick = () => {
-    let cartProduct = document.createElement('div');
-    cartProduct.classList.add('cart__product');
-    cartProduct.setAttribute('data-id', products[index].getAttribute('data-id'))
-    
-    let img = document.createElement('img');
-    img.classList.add('cart__product-image');
-    img.setAttribute('src', imgs[index].getAttribute('src'));
-    
-    let count = document.createElement('div');
-    count.classList.add('cart__product-count');
-    count.innerHTML = `${quantity[index].textContent}`
-    
-    cartProduct.appendChild(img);
-    cartProduct.appendChild(count);
-    
     let carts = document.querySelectorAll('.cart__product')
-    if (carts.length == 0) {
-      array.push(cartProduct.getAttribute('data-id'))
-      cart.appendChild(cartProduct);
+    const array = Array.from(carts)
+    const productInCard = array.find(prod => prod.getAttribute('data-id') == products[index].getAttribute('data-id'));
+    if (productInCard) {
+      productInCard.children[1].textContent = Number(productInCard.children[1].textContent) + Number(quantity[index].textContent);
+    } else {
+      cart.insertAdjacentHTML('beforeend', `
+      <div class="cart__product" data-id="${products[index].getAttribute('data-id')}">
+        <img class="cart__product-image" src="${imgs[index].getAttribute('src')}">
+        <div class="cart__product-count">${quantity[index].textContent}</div>
+      </div>`);
     }
-    carts.forEach((prod) => {
-      if (array.includes(`${cartProduct.getAttribute('data-id')}`)) {
-        if(prod.getAttribute('data-id') == cartProduct.getAttribute('data-id')) {
-          prod.children[1].textContent = Number(prod.children[1].textContent) + Number(count.textContent);
-        }
-      } else {
-        array.push(cartProduct.getAttribute('data-id'))
-        cart.appendChild(cartProduct);      
-      }
-    })
   }
 })

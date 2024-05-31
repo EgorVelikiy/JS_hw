@@ -5,29 +5,20 @@ let tasksList = document.querySelector('.tasks__list')
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-  if (input.value != null) {
-    
-    let newTask = document.createElement('div');
-    newTask.classList.add('task');
-    
-    let newTitle = document.createElement('div');
-    newTitle.classList.add('task__title');
-    newTitle.innerHTML = `${input.value}`;
-    
-    let newRemove = document.createElement('a');
-    newRemove.classList.add('task__remove');
-    newRemove.innerHTML = '&times';
-    newRemove.href = '#';
-    
-    newTask.appendChild(newTitle);
-    newTask.appendChild(newRemove);
-    
-    tasksList.appendChild(newTask);
-    
-    newRemove.onclick = (e) => {
-      e.preventDefault();
-      newTask.remove()
-    }
+  if (input.value.trim().length != 0) {
+    tasksList.insertAdjacentHTML('afterbegin', `
+    <div class="task">
+    <div class="task__title">${input.value}</div>
+    <a href="#" class="task__remove">&times;</a>
+    </div>`);
+    let tasksActive = document.querySelectorAll('.task')
+
+    tasksActive.forEach((task) => {
+      task.lastElementChild.onclick = (e) => {
+        e.preventDefault();
+        task.remove();
+      }
+    })
     form.reset()
   }
 })
