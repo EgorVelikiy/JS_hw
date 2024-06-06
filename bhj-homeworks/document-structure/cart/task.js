@@ -6,7 +6,6 @@ let cart = document.querySelector('.cart__products')
 let incr = document.querySelectorAll('.product__quantity-control_inc')
 let decr = document.querySelectorAll('.product__quantity-control_dec')
 let quantity = document.querySelectorAll('.product__quantity-value')
-let array = []
 
 incr.forEach((inc, index) => {
   inc.onclick = () => {
