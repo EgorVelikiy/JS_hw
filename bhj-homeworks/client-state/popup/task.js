@@ -1,28 +1,30 @@
 let popupClose = document.querySelector('.modal__close')
-let modal = document.querySelector('.modal')
-
-popupClose.onclick = () => {
-    setCookie('popup', 'closed')
-    modal.className = 'modal';
-}
+let modal = document.getElementById('subscribe-modal')
 
 function setCookie(name, value) {
-    console.log(name)
-    document.cookie = name + '=' + encodeURIComponent(value);
-    console.log(document.cookie)
+    document.cookie = name + '=' + encodeURIComponent(value) + ';';
+    console.log('set')
 }
 
 
 function getCookie(name) {
     const pairs = document.cookie.split('; ');
-    const cookie = pairs.find(p => p.startsWith(name + '='));
-    return cookie.substring(name.length + 1);
+    try {
+        const cookie = pairs.find(p => p.startsWith(name + '='));
+        return cookie.substring(name.length + 1);
+        console.log('get')
+    } catch {
+        console.log('get1')
+        return null
+    }
 }
 
-
-try {
-    getCookie('popup') === 'closed';
-} catch (err) {
-    modal.className = 'modal modal_active';
+if (getCookie('popup') === null) {
+    modal.classList.add('modal_active');
+    console.log('active')
 }
 
+popupClose.onclick = () => {
+    setCookie('popup', 'closed')
+    modal.classList.remove('modal_active');
+}
